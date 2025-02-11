@@ -1,6 +1,6 @@
 # Car Scraper API
 
-Este proyecto es una API construida con **FastAPI** que permite obtener datos de vehículos (coches) desde múltiples fuentes en línea. Los datos se obtienen mediante web scraping y se pueden filtrar por marca, modelo y año. La API está diseñada para ser rápida y eficiente, utilizando un sistema de caché para almacenar los datos después de la primera solicitud.
+Este proyecto es una API construida con **FastAPI** que permite obtener datos de vehículos (coches) desde múltiples fuentes en línea. Los datos se obtienen mediante web scraping y se pueden filtrar por marca, modelo y año. La API está diseñada para ser rápida y eficiente, utilizando un sistema de caché para almacenar los datos después de la primera solicitud. (La primera vez que se corre el sistema dura aproximadamente unos 20 segundos)
 
 ## Características principales
 
