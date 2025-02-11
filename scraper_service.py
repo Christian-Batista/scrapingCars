@@ -22,8 +22,7 @@ def scrape_all_sites():
         cars_site3 = []
 
     # Combine all lists into one
-    # all_cars = cars_site1 + cars_site2 + cars_site3
-    all_cars = cars_site1 + cars_site2 
+    all_cars = cars_site1 + cars_site2 + cars_site3
     return all_cars
 
 if __name__ == "__main__":

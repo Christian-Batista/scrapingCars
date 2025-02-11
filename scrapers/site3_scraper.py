@@ -33,7 +33,7 @@ def scrape_site3():
         for car in cars_items:
             try:
                 # Extract the title (which contains the brand and model)
-                title_element = car.find("h6", {"class": "title"}).text.strip()
+                title_element = car.find("h6", {"class": "title"})
                 title = title_element.text.strip() if title_element else ""
 
                 # Verify if title isn't empty before the split
@@ -77,8 +77,3 @@ def scrape_site3():
                 continue
 
     return all_cars
-
-
-if __name__ == "__main__":
-    cars = scrape_site3()
-    print(cars)
