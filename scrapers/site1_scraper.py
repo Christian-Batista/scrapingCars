@@ -3,6 +3,7 @@ En esta pagina se extrae informcaion de la pagina carrosrd.com
 """
 import requests
 from bs4 import BeautifulSoup
+from models.car_model import CarModel
 
 # Define the URL
 url = "https://carrosrd.com/carros"
@@ -50,12 +51,20 @@ def scrape_site1():
 
             # append the car data to the list
             all_cars.append({
+                "reference_id": "i", # Hay que buscar el reference id
                 "brand": brand,
                 "model": model,
                 "year": year,
                 "price": price,
+                "url": "reference_url",# hey que buscar el reference url,
+                "image_url": "image_url", # Hay que buscar la url de la imagen
                 "source": "carrosrd.com",
-                "page": i
+                "page_number": i
             })
+
+            # Save the car to the database
+            car_model = CarModel()
+            for car in all_cars:
+                car_model.save_car(**car)
 
     return all_cars
