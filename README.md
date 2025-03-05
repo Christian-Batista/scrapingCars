@@ -47,11 +47,11 @@ Asegúrate de estar en el directorio raíz del proyecto.
 Ejecuta el siguiente comando:
 
    ```bash
-   uvicorn api:app --reload --host 0.0.0.0 --port 8000
-    Esto iniciará el servidor en http://0.0.0.0:8000.
+    uvicorn api:app --reload --host 0.0.0.0 --port 8000
+        Esto iniciará el servidor en http://0.0.0.0:8000.
    ````
    
-   Uso de la API
+Uso de la API
 La API proporciona un único endpoint para obtener los datos de los vehículos:
 
 Endpoint
@@ -86,23 +86,21 @@ Ejemplos de solicitudes
 Respuesta
 La API devuelve un objeto JSON con la siguiente estructura:
  ```bash
- {
-     {
-  "total": 10,
-  "cars": [
-            {
-              "brand": "Volvo",
-              "model": "XC90",
-              "year": "2018",
-              "price": "$45,000",
-              "source": "montao.do",
-              "page": 1
-            },
-            {
-                
-            }
+    {
+        {
+    "total": 10,
+    "cars": [
+                {
+                "brand": "Volvo",
+                "model": "XC90",
+                "year": "2018",
+                "price": "$45,000",
+                "source": "montao.do",
+                "page": 1
+                },
+        ]
+        }
     }
- }
  ````
 
 
