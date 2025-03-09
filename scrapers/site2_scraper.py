@@ -77,6 +77,6 @@ def scrape_site2():
     # save the cars to the database
     vehicle_model = VehicleModel()
     for car in all_cars:
-        vehicle_model.save_car(**car)
+        vehicle_model.save(**car)
 
     return all_cars

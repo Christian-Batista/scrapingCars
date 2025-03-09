@@ -4,7 +4,7 @@ class VehicleModel:
     def __init__(self):
         self.db = database()
 
-    def save_car(self, brand, model, year, price, url, image_url,  fuel_type, source, page_number):
+    def save(self, brand, model, year, price, url, image_url,  fuel_type, source, page_number):
         """
         Save a car to the database.
         Args:
