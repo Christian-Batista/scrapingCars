@@ -37,6 +37,16 @@ class VehicleModel:
             model (str): The model of the car.
             year (str): The year of the car.
         """
-        query = "SELECT * FROM vehicles WHERE brand = %s AND model = %s AND year = %s"
-        params = (brand, model, year)
+        query = "SELECT * FROM vehicles WHERE 1=1"
+        params = []
+        if brand:
+            query += " AND LOWER(brand) = LOWER(%s)"
+            params.append(brand)
+        if model:
+            query += " AND LOWER(model) like LOWER(%s)"
+            params.append(f"%{model}%")
+        if year:
+            query += " AND year like LOWER(%s)"
+            params.append(f"%{year}%")
+
         return self.db.fetch_all(query, params)
