@@ -74,9 +74,4 @@ def scrape_site2():
                 "page_number": i
             })
 
-    # save the cars to the database
-    vehicle_model = VehicleModel()
-    for car in all_cars:
-        vehicle_model.save(**car)
-
     return all_cars

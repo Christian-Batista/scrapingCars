@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Query
-from scraper_service import scrape_all_sites
+from services.scraper_service import scrape_all_sites
 
 app = FastAPI()
 

@@ -1,5 +1,5 @@
 from celery import Celery
-from scraper_service import scrape_all_sites
+from services.scraper_service import scrape_all_sites
 
 
 app = Celery('tasks', broker='redis://localhost:6379/0', backend='redis://localhost:6379/0')
