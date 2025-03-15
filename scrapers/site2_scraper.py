@@ -3,6 +3,7 @@ En esta pagina se extrae informcaion de la pagina supercarros.com
 """
 import requests
 from bs4 import BeautifulSoup
+from  models.vehicle_model import VehicleModel
 
 # Define the URL
 url = "https://www.supercarros.com/carros/"
@@ -22,6 +23,7 @@ def scrape_site2():
 
     # make a request to the URL to get the HTML content of the first 10 pages
     for i in range(1, 11):
+        print(url)
 
         response = requests.get(f"{url}?PagingPageSkip={i}", headers=headers)
 
@@ -35,8 +37,19 @@ def scrape_site2():
 
         # loop through the cars and extract the information
         for car in cars_container.find_all("li", {"class": "normal"}):
+            # Extract the url reference
+            url_info = car.find("a")["href"]
+            url_reference = "https://www.supercarros.com" + url_info
             # Extract the title (which contains the brand and model)
             title = car.find("div", {"class": "title1"}).text.strip()
+
+            # Extract image url
+            image_url = car.find("img", {"class": "real"})["src"]
+            print(image_url)
+
+            # Extract the fuel type
+            fuel_info = car.find("div", {"class": "title2"}).text.strip()
+            fuel_type = fuel_info.split("-")[1].strip()
 
             # Split the title into brand and model
             brand_model = title.split()
@@ -55,7 +68,10 @@ def scrape_site2():
                 "year": year,
                 "price": price,
                 "source": "supercarros.com",
-                "page": i
+                "url": url_reference,
+                "image_url": image_url,
+                "fuel_type": fuel_type,
+                "page_number": i
             })
 
     return all_cars

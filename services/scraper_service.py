@@ -1,4 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from scrapers import site1_scraper, site2_scraper, site3_scraper
+from services.vehicle_service import VehicleService
 
 def scrape_all_sites():
     """
@@ -21,9 +25,14 @@ def scrape_all_sites():
         print(f"Error scraping site 3: {cars_site3['error']}")
         cars_site3 = []
 
-    # Combine all lists into one
-    all_cars = cars_site1 + cars_site2 + cars_site3
-    return all_cars
+    # Combine the results
+    cars = cars_site1 + cars_site2 + cars_site3
+
+    # Use the service to save in tha database
+    vehice_service = VehicleService()
+    vehice_service.save_vehicle(cars)
+    return cars
+    
 
 if __name__ == "__main__":
     all_cars_data = scrape_all_sites()

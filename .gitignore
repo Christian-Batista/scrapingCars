@@ -1,2 +1,5 @@
 .env
 __pycache__
+dump.rdb
+cars.sql
+services/images/vehicles/

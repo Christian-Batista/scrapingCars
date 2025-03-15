@@ -57,3 +57,7 @@ class database:
             print("✅ Connection closed")
         except Error as e:
             print(f"❌ Error closing connection: {e}")
+
+if __name__ == "__main__":
+    db = database()
+    db.close()
