@@ -12,7 +12,7 @@ class VehicleService:
         """
         for car in cars:
             try:
-                #self.image_service.save_image(car["image_url"])
+                car["image_url"] = self.image_service.save_image(car["image_url"])
                 self.vehicle_model.save(**car)
             except Exception as e:
                 print(f"❌ Error saving vehicle: {e}")

@@ -2,7 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-def obtener_anio(titulo):
+def get_year(titulo):
     """
     Extrae el año del título si existe, de lo contrario, devuelve 1.
     """
@@ -32,7 +32,7 @@ def scrape_site3():
                 fuel_type = car.find("div", {"class": "inner"}).find("p").text.strip()
 
                 # Extraer año con la función obtener_anio()
-                year = obtener_anio(title)
+                year = get_year(title)
 
                 # Separar marca y modelo eliminando el año
                 brand_model = re.sub(r'\b(19|20)\d{2}\b', '', title).strip().split()

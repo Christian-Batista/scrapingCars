@@ -34,8 +34,6 @@ class ImageService:
                 with open(file_path, "wb") as file:
                     for chunk in response.iter_content(1024):
                         file.write(chunk)
-
-                print(f"✅Image saved: {filename}")
                 return filename
             else:
                 print(f"❌Failed to fetch image. Status code: {response.status_code}")
@@ -43,6 +41,3 @@ class ImageService:
         except Exception as e:
             print(f"❌Error saving image: {e}")
             return None
-if __name__ == "__main__":
-    image_service = ImageService()
-    image_service.save_image("https://montao.do/vehiculo.php?id=744&toyota-rav4-xle-2020-negra-.com/image.jpg")
