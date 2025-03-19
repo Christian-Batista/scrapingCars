@@ -1,38 +1,80 @@
 import sys
 import os
+import threading
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from scrapers import site1_scraper, site2_scraper, site3_scraper
 from services.vehicle_service import VehicleService
 
-def scrape_all_sites():
-    """
-    Call all scraper functions and combine their results.
-    """
-    cars_site1 = site1_scraper.scrape_site1()
-    cars_site2 = site2_scraper.scrape_site2()
-    cars_site3 = site3_scraper.scrape_site3()
+# Variables to store the results
+results = {
+    "site1": [],
+    "site2": [],
+    "site3": []
+}
 
-    # Check if any scraper returned an error
-    if isinstance(cars_site1, dict) and "error" in cars_site1:
-        print(f"Error scraping site 1: {cars_site1['error']}")
-        cars_site1 = []
-    
-    if isinstance(cars_site2, dict) and "error" in cars_site2:
-        print(f"Error scraping site 2: {cars_site2['error']}")
-        cars_site2 = []
-    
-    if isinstance(cars_site3, dict) and "error" in cars_site3:
-        print(f"Error scraping site 3: {cars_site3['error']}")
-        cars_site3 = []
+def scraper1():
+    """
+    Function to scrape carrosrd.com
+    """
+    print("🚀 Starting scraper for carrosrd.com")
+    data = site1_scraper.scrape_site1()
+    if isinstance(data, dict) and "error" in data:
+        print(f"Error scraping carrosrd.com: {data['error']}")
+    else:
+        results["site1"] = data
+    print("✅ Scraper carrosrd.com finished")
+
+def scraper2():
+    """
+    Function to scrape supercarros.com
+    """
+    print("🚀 Starting scraper for supercarros.com")
+    data = site2_scraper.scrape_site2()
+    if isinstance(data, dict) and "error" in data:
+        print(f"Error scraping supercarros.com: {data['error']}")
+    else:
+        results["site2"] = data
+    print("✅ Scraper supercarros.com finished")
+
+def scraper3():
+    """
+    Function to scrape montao.do
+    """
+    print("🚀 Starting scraper for montao.do")
+    data = site3_scraper.scrape_site3()
+    if isinstance(data, dict) and "error" in data:
+        print(f"Error scraping montao.do: {data['error']}")
+    else:
+        results["site3"] = data
+    print("✅ Scraper montao.do finished")
+
+def scrape_all_sites():
+    # Create threads
+    thread1 = threading.Thread(target=scraper1)
+    thread2 = threading.Thread(target=scraper2)
+    thread3 = threading.Thread(target=scraper3)
+
+    # Start threads
+    thread1.start()
+    thread2.start()
+    thread3.start()
+
+    # Wait for threads to finish
+    thread1.join()
+    thread2.join()
+    thread3.join()
 
     # Combine the results
-    cars = cars_site1 + cars_site2 + cars_site3
+    all_cars = results["site1"] + results["site2"] + results["site3"]
 
-    # Use the service to save in tha database
-    vehice_service = VehicleService()
-    vehice_service.save_vehicle(cars)
-    return cars
-    
+    # Store the data
+    vehicle_service = VehicleService()
+    vehicle_service.save_vehicle(all_cars)
+
+    return all_cars
+
 
 if __name__ == "__main__":
     all_cars_data = scrape_all_sites()
+    print(f"🚗 Total de autos obtenidos: {len(all_cars_data)}")
