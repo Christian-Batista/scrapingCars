@@ -8,23 +8,25 @@ class VehicleService:
         # load urls from database
         self.existing_urls = self._load_existing_urls()
 
-    def save_vehicle(self, cars):
-        """
-        Save the cars data in a database.
-        """
-        for car in cars:
-            try:
-                # check if the vehicle already exists
-                if car["url"] not in self.existing_urls:
-                    # save the image
-                    car["image_url"] = self.image_service.save_image(car["image_url"])
-                    # save the car
-                    self.vehicle_model.save(**car)
-                else:
-                    # vehicle already exists, so we do nothing
-                    print(f"✅ Vehicle already exists: {car['url']}")
-            except Exception as e:
-                print(f"❌ Error saving vehicle: {e}")
+def save_vehicle(self, cars):
+    """
+    Save the cars data in a database.
+    """
+    for car in cars:
+        try:
+            # Check if the vehicle already exists
+            if car["url"] not in self.existing_urls:
+                # Save the image
+                car["image_url"] = self.image_service.save_image(car["image_url"])
+                # Save the car
+                self.vehicle_model.save(**car)
+                # Add the new URL to the set of existing URLs
+                self.existing_urls.add(car["url"])
+            else:
+                # Vehicle already exists, so we do nothing
+                print(f"✅ Vehicle already exists: {car['url']}")
+        except Exception as e:
+            print(f"❌ Error saving vehicle: {e}")
     
     def mark_vehicle_inactive(self, url):
         """
