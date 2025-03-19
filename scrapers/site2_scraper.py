@@ -23,8 +23,6 @@ def scrape_site2():
 
     # make a request to the URL to get the HTML content of the first 10 pages
     for i in range(1, 11):
-        print(url)
-
         response = requests.get(f"{url}?PagingPageSkip={i}", headers=headers)
 
         if response.status_code != 200:
@@ -45,7 +43,6 @@ def scrape_site2():
 
             # Extract image url
             image_url = car.find("img", {"class": "real"})["src"]
-            print(image_url)
 
             # Extract the fuel type
             fuel_info = car.find("div", {"class": "title2"}).text.strip()

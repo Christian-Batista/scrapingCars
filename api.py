@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
 from models.vehicle_model import VehicleModel
 from config import IMAGES_PATH
+import math
 
 app = FastAPI()
 
@@ -20,21 +21,21 @@ def get_cars(
     Endpoint to fetch all cars with optional filters for brand, model, and year.
     """
     try:
-        # Crear una instancia del modelo
+        # Create a VehicleModel instance
         vehicle_model = VehicleModel()
 
-        # Obtener los coches filtrados
+        # Get filtered cars
         if brand or model or year:
             filtered_cars = vehicle_model.get_filtered_cars(brand, model, year)
         else:
             filtered_cars = vehicle_model.get_cars()
 
-        # Aplicar paginación
+        # Apply pagination
         start = (page - 1) * limit
         end = start + limit
         paginated_cars = filtered_cars[start:end]
 
-        # Convertir los resultados a un formato JSON-friendly
+        # Convert cars to a list of dictionaries
         cars_data = [
             {
                 "brand": car["brand"],
@@ -42,18 +43,23 @@ def get_cars(
                 "year": car["year"],
                 "price": car["price"],
                 "url": car["url"],
-                "image_url": f"http://0.0.0.0:8000/static/{car["image_url"]}",
+                "image_url": f"http://0.0.0.0:8000/static/{car['image_url']}",
                 "fuel_type": car["fuel_type"],
                 "source": car["source"],
                 "page_number": car["page_number"],
+                "status": car["status"],
             }
-            for car in paginated_cars  # Cambia "filtered_cars" a "car"
+            for car in paginated_cars
         ]
+
+        # here I have to calculate the total number of cars
+        total_pages = math.ceil(len(filtered_cars) / limit)
 
         return {
             "total": len(filtered_cars),
             "page": page,
             "limit": limit,
+            "total_pages": total_pages,
             "cars": cars_data
         }
     

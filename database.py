@@ -38,17 +38,6 @@ class database:
             print(f"❌ Error fetching data: {e}")
             return None
         
-    def fetch_query(self, query, params=None):
-        "Fetch data from the database"
-        try:
-            self.cursor.execute(query, params or ())
-            result = self.cursor.fetchall()
-            print("✅ Query fetched successfully")
-            return result
-        except Error as e:
-            print(f"❌ Error fetching data: {e}")
-            return None
-        
     def close(self):
         "Close the database connection"
         try:

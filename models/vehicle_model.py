@@ -40,13 +40,27 @@ class VehicleModel:
         query = "SELECT * FROM vehicles WHERE 1=1"
         params = []
         if brand:
-            query += " AND LOWER(brand) = LOWER(%s)"
+            query += " AND LOWER(brand) = LOWER(%s) AND status != 'inactive'"
             params.append(brand)
         if model:
-            query += " AND LOWER(model) like LOWER(%s)"
+            query += " AND LOWER(model) like LOWER(%s) AND status != 'inactive'"
             params.append(f"%{model}%")
         if year:
-            query += " AND year like LOWER(%s)"
+            query += " AND year like LOWER(%s) AND status != 'inactive'"
             params.append(f"%{year}%")
 
         return self.db.fetch_all(query, params)
+    
+    def get_cars_by_id(self, id):
+        """
+        Get car details by car ID.
+        Args:
+            id (int): The ID of the car.
+        Returns:
+            dict: A dictionary containing car details if found, otherwise None.
+        """
+        query = "SELECT * FROM vehicles WHERE id = %s"
+        params = (id,)
+        return self.db.fetch_query(query, params)
+    
+    

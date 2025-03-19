@@ -36,4 +36,3 @@ def scrape_all_sites():
 
 if __name__ == "__main__":
     all_cars_data = scrape_all_sites()
-    print(all_cars_data)
